@@ -1,0 +1,17 @@
+# sudo apt-get install docker-compose-plugin
+# docker compose up -d --force-recreate
+
+services:
+  db:
+    image: mysql:8
+    container_name: todolist_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: todolist_db
+      MYSQL_USER: todolist_user
+      MYSQL_PASSWORD: dupa8
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
