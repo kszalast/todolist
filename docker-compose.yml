@@ -2,39 +2,16 @@
 # docker compose up -d --force-recreate
 
 services:
-  haproxy:
-    image: todo_haproxy
-    container_name: todo_haproxy
-    ports:
-      - "80:80"
-
-  web:
-    image: frontend-app:latest
-    container_name: frontend-app
-
-  app:
-    image: todo-list:latest
-    container_name: todo-list
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: root
-
-  exchange-rates:
-    image: exchange-rates:latest
-    container_name: exchange-rates
-
   db:
     image: mysql:8
-    container_name: db
+    container_name: todolist_mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: todolist_db
       MYSQL_USER: todolist_user
-      MYSQL_PASSWORD: to_secret_password
+      MYSQL_PASSWORD: dupa8
+    ports:
+      - "3306:3306"
     volumes:
       - ./mysql_data:/var/lib/mysql
