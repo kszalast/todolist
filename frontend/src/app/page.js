@@ -15,7 +15,24 @@ export default function Home() {
     }, []);
 
     const [newListName, setNewListName] = useState("");
+    const [exchangeRates, setExchangeRates] = useState({ USD: 0, EUR: 0, CHF: 0 });
 
+
+    useEffect(() => {
+        const fetchExchangeRates = async () => {
+            try {
+                const response = await fetch("/api/exchange/rates");
+                const data = await response.json();
+                setExchangeRates(data);
+            } catch (error) {
+                console.error("Błąd podczas pobierania kursów walut:", error);
+            }
+        };
+
+        fetchExchangeRates();
+        const interval = setInterval(fetchExchangeRates, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
 
     const addList = async () => {
@@ -41,7 +58,17 @@ export default function Home() {
 
     return (
         <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
+            <div className="mb-8"></div>
+            <div className="flex justify-center space-x-8 p-4 bg-gray-800 text-white rounded-xl">
+
+                <CurrencyRate symbol="USD" rate={exchangeRates.USD}/>
+                <CurrencyRate symbol="EUR" rate={exchangeRates.EUR}/>
+                <CurrencyRate symbol="CHF" rate={exchangeRates.CHF}/>
+            </div>
+
+            <div className="mb-20"></div>
             <h1 className="text-3xl font-bold mb-6">Moje listy TODO</h1>
+
 
             {/* Input do dodawania nowej listy */}
             <div className="flex gap-2 mb-6">
@@ -81,6 +108,22 @@ export default function Home() {
                     </div>
                 ))}
             </div>
+        </div>
+    );
+}
+
+function CurrencyRate({ symbol, rate }) {
+    const currencyIcons = {
+        USD: "🇺🇸",
+        EUR: "🇪🇺",
+        CHF: "🇨🇭",
+    };
+
+    return (
+        <div className="flex items-center space-x-2 text-lg font-semibold">
+            <span className="text-2xl">{currencyIcons[symbol]}</span>
+            <span>{symbol}:</span>
+            <span className="text-blue-600">{rate ? rate.toFixed(2) : "—"}</span>
         </div>
     );
 }
