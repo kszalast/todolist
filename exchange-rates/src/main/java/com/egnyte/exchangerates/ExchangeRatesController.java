@@ -1,4 +1,4 @@
-package com.egnyte.todolist;
+package com.egnyte.exchangerates;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
