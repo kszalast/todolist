@@ -21,6 +21,10 @@ services:
     ports:
       - "8080:8080"
 
+  exchange-rates:
+    image: exchange-rates:latest
+    container_name: exchange-rates
+
   db:
     image: mysql:8
     container_name: db
