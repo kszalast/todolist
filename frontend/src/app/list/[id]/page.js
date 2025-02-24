@@ -10,7 +10,7 @@ export default function TodoListDetails() {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/todolists/${id}/tasks`)
+        fetch(`/api/todolists/${id}/tasks`)
             .then((res) => res.json())
             .then((data) => setTasks(data));
     }, [id]);
@@ -20,7 +20,7 @@ export default function TodoListDetails() {
     const addTask = async () => {
         if (newTask.trim() === "") return;
 
-        const response = await fetch(`http://localhost:8080/api/todolists/${id}/tasks`, {
+        const response = await fetch(`/api/todolists/${id}/tasks`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: newTask }),
@@ -33,7 +33,7 @@ export default function TodoListDetails() {
     };
 
     const removeTask = async (taskId) => {
-        await fetch(`http://localhost:8080/api/todolists/${id}/tasks/${taskId}`, { method: "DELETE" });
+        await fetch(`/api/todolists/${id}/tasks/${taskId}`, { method: "DELETE" });
         setTasks(tasks.filter((task) => task.id !== taskId));
     };
 

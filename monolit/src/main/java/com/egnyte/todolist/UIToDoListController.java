@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/todolists")
-@CrossOrigin(origins = "*")
 public class UIToDoListController {
 
     private final TodoListRepository todoListRepository;

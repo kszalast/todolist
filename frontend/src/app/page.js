@@ -9,7 +9,7 @@ export default function Home() {
     const [lists, setLists] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/todolists")
+        fetch("/api/todolists")
             .then((res) => res.json())
             .then((data) => setLists(data));
     }, []);
@@ -21,7 +21,7 @@ export default function Home() {
     const addList = async () => {
         if (!newListName.trim()) return; // Zapobiega dodaniu pustej listy
 
-        const response = await fetch("http://localhost:8080/api/todolists", {
+        const response = await fetch("/api/todolists", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name: newListName }),
@@ -33,7 +33,7 @@ export default function Home() {
     };
 
     const removeList = async (id) => {
-        await fetch(`http://localhost:8080/api/todolists/${id}`, { method: "DELETE" });
+        await fetch(`/api/todolists/${id}`, { method: "DELETE" });
         setLists(lists.filter((list) => list.id !== id));
     };
 
