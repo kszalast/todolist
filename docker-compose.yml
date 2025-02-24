@@ -2,15 +2,34 @@
 # docker compose up -d --force-recreate
 
 services:
+  web:
+    image: frontend-app:latest
+    container_name: frontend-app
+    ports:
+      - "3000:3000"
+
+  app:
+    image: todo-list:latest
+    container_name: todo-list
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+    ports:
+      - "8080:8080"
+
   db:
     image: mysql:8
-    container_name: todolist_mysql
+    container_name: db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: todolist_db
       MYSQL_USER: todolist_user
-      MYSQL_PASSWORD: dupa8
+      MYSQL_PASSWORD: to_secret_password
     ports:
       - "3306:3306"
     volumes:
