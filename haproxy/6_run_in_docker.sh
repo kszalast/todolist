@@ -1,0 +1,1 @@
+docker run -d --name haproxy --network todolist_default -p 80:80 todo_haproxy
