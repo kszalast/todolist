@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+  namespace: todo-app
+spec:
+  rules:
+    - host: todo.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-app
+                port:
+                  number: 80
+          - path: /api/todolists
+            pathType: Prefix
+            backend:
+              service:
+                name: todo-list
+                port:
+                  number: 80
+          - path: /api/exchange/rates
+            pathType: Prefix
+            backend:
+              service:
+                name: exchange-rates
+                port:
+                  number: 80
