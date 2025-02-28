@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchange-rates
+  namespace: todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exchange-rates
+  template:
+    metadata:
+      labels:
+        app: exchange-rates
+    spec:
+      containers:
+        - name: exchange-rates
+          image: exchange-rates:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
