@@ -19,16 +19,18 @@ node {
         } 
     }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
+stage('Run tests') {
+    withMaven(
+            maven: 'maven'
+        ) {
+          sh "mvn test"
         }
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+        }
+    }
+}
 
 
     stage('Build docker images') {
