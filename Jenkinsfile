@@ -25,7 +25,7 @@ node {
                 sh "mvn test"
             }
         } finally {
-            junit 'target/surefire-reports/*.xml'
+            junit testResults: '**/target/surefire-reports/TEST-*.xml'
         }
     }
 
