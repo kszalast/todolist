@@ -15,9 +15,21 @@ node {
             withMaven(
             maven: 'maven'
         ) {
-          sh "mvn clean install"
+          sh "mvn clean install -DskipTests=true"
         } 
     }
+
+    stage('Run tests') {
+      step {
+          sh "mvn test"
+        }
+        post {
+        always {
+           junit 'target/surefire-report/*.xml'
+        }
+        } 
+    }
+
 
     stage('Build docker images') {
         docker.build("${name}/monolit:${BUILD_NUMBER}","${env.WORKSPACE}/monolit")
