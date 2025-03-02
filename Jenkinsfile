@@ -20,7 +20,11 @@ node {
     }
 
 stage('Run tests') {
-    sh "mvn test"
+    withMaven(
+            maven: 'maven'
+        ) {
+          sh "mvn test"
+        }
     post {
         always {
             junit 'target/surefire-reports/*.xml'
