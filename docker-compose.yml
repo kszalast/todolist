@@ -18,7 +18,6 @@ services:
     networks:
       - uam-network
 
-
   db:
     image: mysql:8
     container_name: db
