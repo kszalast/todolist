@@ -2,21 +2,6 @@
 # docker compose up -d --force-recreate
 version: '2'
 services:
-  haproxy:
-    image: todo_haproxy
-    container_name: todo_haproxy
-    depends_on:
-      - web
-    ports:
-      - "80:80"
-    networks:
-      - uam-network
-
-  web:
-    image: frontend-app:latest
-    container_name: frontend-app
-    networks:
-      - uam-network
 
   db:
     image: mysql:8

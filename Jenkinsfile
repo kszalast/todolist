@@ -53,4 +53,15 @@ node {
         sh ("docker run -d --network uam-network --hostname haproxy -p 80:80 --name haproxy -v /var/log/:/var/log/ ${name}/haproxy:${BUILD_NUMBER}")
     }
 
+        stage('Generate Javadoc') {
+            withMaven(maven: 'maven') {
+                sh "mvn javadoc:javadoc"
+            }
+        }
+
+        stage('Publish Javadoc') {
+            publishJavadoc javadocDir: '**/target/site/apidocs', keepAll: true
+        }
+
+
 }
