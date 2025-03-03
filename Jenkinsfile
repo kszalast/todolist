@@ -60,7 +60,7 @@ node {
         }
 
         stage('Publish Javadoc') {
-            javadoc javadocDir: '/monolit/target/reports/apidocs', keepAll: true
+            javadoc javadocDir: '/var/jenkins_home/workspace/Build_deploy/monolit/target/reports/apidocs', keepAll: true
         }
 
 
