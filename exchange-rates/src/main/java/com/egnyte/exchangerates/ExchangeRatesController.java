@@ -14,7 +14,7 @@ public class ExchangeRatesController {
     @GetMapping
     public Map<String, Float> rates() {
         Random rand = new Random();
-        float usd = roundPrecision2(40 + rand.nextFloat(0.5F));
+        float usd = roundPrecision2(1 + rand.nextFloat(0.5F));
         float euro = roundPrecision2(4.2F + rand.nextFloat(0.5F));
         float chf = roundPrecision2(4.6F + rand.nextFloat(0.5F));
 
