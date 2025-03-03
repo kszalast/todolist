@@ -60,7 +60,7 @@ node {
         }
 
         stage('Publish Javadoc') {
-            javadoc javadocDir: '**/target/site/apidocs', keepAll: true
+            javadoc javadocDir: '**/target/reports/apidocs', keepAll: true
         }
 
 
