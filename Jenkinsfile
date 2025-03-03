@@ -32,6 +32,7 @@ node {
         docker.build("${name}/monolit:${BUILD_NUMBER}","${env.WORKSPACE}/monolit")
         docker.build("${name}/exchange-rates:${BUILD_NUMBER}","${env.WORKSPACE}/exchange-rates")
         docker.build("${name}/haproxy:${BUILD_NUMBER}","${env.WORKSPACE}/haproxy")
+        docker.build("${name}/frontend-app:${BUILD_NUMBER}","${env.WORKSPACE}/frontend")
     }
     
     stage('Deploy on docker') {
@@ -42,7 +43,11 @@ node {
         sh ("docker ps -q --filter name=exchange-rates | xargs -r docker stop")  // stop the existing container if it's running
         sh ("docker ps -a -q --filter name=exchange-rates | xargs -r docker rm")   // remove the existing container if it exists
         sh ("docker run -d --network uam-network --hostname exchange-rates --name exchange-rates-container -v /var/log/:/var/log/ ${name}/exchange-rates:${BUILD_NUMBER}")
-        
+
+        sh ("docker ps -q --filter name=frontend-app | xargs -r docker stop")  // stop the existing container if it's running
+        sh ("docker ps -a -q --filter name=frontend-app | xargs -r docker rm")   // remove the existing container if it exists
+        sh ("docker run -d --network uam-network --hostname web --name frontend-app -v /var/log/:/var/log/ ${name}/frontend-app:${BUILD_NUMBER}")
+
         sh ("docker ps -q --filter name=haproxy | xargs -r docker stop")  // stop the existing container if it's running
         sh ("docker ps -a -q --filter name=haproxy | xargs -r docker rm")   // remove the existing container if it exists
         sh ("docker run -d --network uam-network --hostname haproxy -p 80:80 --name haproxy -v /var/log/:/var/log/ ${name}/haproxy:${BUILD_NUMBER}")
