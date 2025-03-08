@@ -1,2 +1,5 @@
 spring:
-  application.name: exchange-rates
+  application.name: exchange-ratess
+
+logback:
+  debug: true
