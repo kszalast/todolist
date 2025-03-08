@@ -1,7 +1,12 @@
 node {
     def name = "uam"
-    
+     options {
+            // This is required if you want to clean before build
+            skipDefaultCheckout(true)
+        }
     stage('Clone repository') {
+        // Clean before build
+        cleanWs()
         checkout scm
     }
 
@@ -52,17 +57,5 @@ node {
         sh ("docker ps -a -q --filter name=haproxy | xargs -r docker rm")   // remove the existing container if it exists
         sh ("docker run -d --network uam-network --hostname haproxy -p 80:80 --name haproxy -v /var/log/:/var/log/ ${name}/haproxy:${BUILD_NUMBER}")
     }
-
-        stage('Generate Javadoc') {
-            withMaven(maven: 'maven') {
-                sh "mvn javadoc:javadoc"
-            }
-        }
-
-        stage('Publish Javadoc') {
-            javadoc javadocDir: '/var/jenkins_home/workspace/Build_deploy/monolit/target/reports/apidocs', keepAll: true
-         javadoc javadocDir: '/var/jenkins_home/workspace/Build_deploy/exchange-rates/target/reports/apidocs', keepAll: true
-        }
-
 
 }
