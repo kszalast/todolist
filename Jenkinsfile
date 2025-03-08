@@ -1,12 +1,6 @@
 node {
     def name = "uam"
-     options {
-            // This is required if you want to clean before build
-            skipDefaultCheckout(true)
-        }
     stage('Clone repository') {
-        // Clean before build
-        cleanWs()
         checkout scm
     }
 
