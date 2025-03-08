@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 <!--    <include resource="org/springframework/boot/logging/logback/default.xml"/>-->
-    <property name="APPLICATION_PREFIX" value="todolist"/>
+    <property name="APPLICATION_PREFIX" value="todolist-logback"/>
     <property name="LOG_DIR" value="/var/log/todoapp" />
 
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${APPLICATION_PREFIX} [%thread] %-5p %c{1}:%L - %m%n"/>
