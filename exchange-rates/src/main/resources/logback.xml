@@ -2,6 +2,7 @@
 <configuration>
 <!--    <include resource="org/springframework/boot/logging/logback/default.xml"/>-->
     <property name="APPLICATION_PREFIX" value="exchange-rates"/>
+    <property name="LOG_DIR" value="/var/log/todoapp" />
 
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${APPLICATION_PREFIX} [%thread] %-5p %c{1}:%L - %m%n"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -12,7 +13,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>/var/log/exchange-rates.log</file>
+        <file>${LOG_DIR}/exchange-rates.log</file>
         <append>true</append>
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
