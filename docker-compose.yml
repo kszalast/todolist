@@ -1,31 +1,7 @@
 # sudo apt-get install docker-compose-plugin
 # docker compose up -d --force-recreate
-
+version: '2'
 services:
-  haproxy:
-    image: todo_haproxy
-    container_name: todo_haproxy
-    ports:
-      - "80:80"
-
-  web:
-    image: frontend-app:latest
-    container_name: frontend-app
-
-  app:
-    image: todo-list:latest
-    container_name: todo-list
-    depends_on:
-      - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: root
-
-  exchange-rates:
-    image: exchange-rates:latest
-    container_name: exchange-rates
 
   db:
     image: mysql:8
@@ -39,3 +15,26 @@ services:
 
     volumes:
       - ./mysql_data:/var/lib/mysql
+
+    networks:
+      - uam-network
+  
+  jenkins:
+      image: jenkins/jenkins:lts-jdk17
+      privileged: true
+      user: root
+      ports:
+        - '8080:8080'
+        - '50000:50000'
+      container_name: jenkins
+      volumes:
+        - jenkins_home:/var/jenkins_home 
+        - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        - uam-network
+
+volumes:
+    jenkins_home:
+networks:
+  uam-network:
+    external: true
