@@ -19,3 +19,9 @@ spring:
     check-template-location: true
     mode: HTML
     cache: false
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: '*'
