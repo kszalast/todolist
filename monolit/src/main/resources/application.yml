@@ -13,12 +13,6 @@ spring:
   sql:
     init:
       mode: always
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    check-template-location: true
-    mode: HTML
-    cache: false
 
     management:
       endpoints:
