@@ -35,10 +35,6 @@ management:
     web:
       exposure:
         include: "*"
-      path-mapping:
-        # prometheus looks at /metrics by default when scraping for metrics
-        metrics: spring-metrics
-        prometheus: metrics
   prometheus:
     metrics:
       export:
