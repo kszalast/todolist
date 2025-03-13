@@ -20,24 +20,26 @@ spring:
     mode: HTML
     cache: false
 
+
 management:
-  security:
-    enabled: false
-  endpoint:
-    metrics:
-      access: unrestricted
-    prometheus:
-      access: unrestricted
-    health:
-      show-details: always
-      show-components: always
-      probes:
-        enabled: true
-    info:
-      env:
-        enabled: true
-      access: unrestricted
+  metrics:
+    distribution:
+      #enabling percentile bucket exposure on metrics endpoint
+      percentiles-histogram.http.server.requests: true
+    percentiles:
+      # expose metrics for 95% and 99% percentile buckets
+      http.server.requests: 0.95, 0.99
+      # expose metric for requests that meet 50ms response time SLA
+      sla.http.server.requests: 50ms
   endpoints:
     web:
       exposure:
-        include: prometheus, metrics, info, health, shutdown, beans
+        include: "*"
+      path-mapping:
+        # prometheus looks at /metrics by default when scraping for metrics
+        metrics: spring-metrics
+        prometheus: metrics
+  prometheus:
+    metrics:
+      export:
+        enabled: true
