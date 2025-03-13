@@ -22,8 +22,10 @@ spring:
 
     management:
       endpoints:
+        prometheus:
+          enabled: true
         health:
           show-details: always
         web:
           exposure:
-            include: '*'
+            include: prometheus
