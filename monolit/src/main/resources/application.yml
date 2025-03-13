@@ -20,12 +20,24 @@ spring:
     mode: HTML
     cache: false
 
-    management:
-      endpoints:
-        prometheus:
-          enabled: true
-        health:
-          show-details: always
-        web:
-          exposure:
-            include: prometheus
+management:
+  security:
+    enabled: false
+  endpoint:
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    info:
+      env:
+        enabled: true
+      access: unrestricted
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, metrics, info, health, shutdown, beans
