@@ -1,1 +1,2 @@
+docker rm -f todo-list-container
 docker run -p 8080:8080 --network host --name todo-list-container -d todo-list
