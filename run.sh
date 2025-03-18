@@ -1,4 +1,7 @@
 mvn clean package
-./monolit/1_build_docker_image.sh
-./frontend/3_build_docker_image.sh
+cd monolit
+./1_build_docker_image.sh
+cd ../frontend
+./3_build_docker_image.sh
+cd ..
 docker compose up -d --force-recreate
