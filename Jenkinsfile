@@ -1,13 +1,10 @@
 node {
     def name = "uam"
+    def dockerHome = tool 'docker'
+    env.PATH = "${dockerHome}/bin:${env.PATH}"
     
     stage('Clone repository') {
         checkout scm
-    }
-
-    stage('Initialize Docker env'){
-        def dockerHome = tool 'docker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
     }
     
     stage('Build applications with Maven') {
