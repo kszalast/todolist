@@ -20,51 +20,42 @@ services:
       - uam-network
 
   jenkins:
-      image: jenkins/jenkins:lts-jdk17
-      privileged: true
-      user: root
-      ports:
-        - '8080:8080'
-        - '50000:50000'
-      container_name: jenkins
-      volumes:
-        - jenkins_home:/var/jenkins_home
-        - /var/run/docker.sock:/var/run/docker.sock
-      networks:
-        - uam-network
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.3
+    image: jenkins/jenkins:lts-jdk17
+    privileged: true
+    user: root
     ports:
-      - '9200:9200'
-      - '9300:9300'
-    networks:
-      - uam-network
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.17.3
-    ports:
-      - '5601:5601'
-    depends_on:
-      - elasticsearch
-    networks:
-      - uam-network
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.17.3
-    ports:
-      - '25826:25826'
+      - '8080:8080'
+      - '50000:50000'
+    container_name: jenkins
     volumes:
-      - $PWD/logstash_config/:/etc/logstash/conf.d/
-      - /var/log/:/var/log/
-    command: logstash -f /etc/logstash/conf.d/logstash-spring.conf
-    links:
-      - "elasticsearch:elasticsearch"
-    depends_on:
-      - elasticsearch
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - uam-network
+
+  prometheus:
+    image: prom/prometheus:v2.44.0
+    container_name: prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml --log.level=debug
+    ports:
+      - "9090:9090"
+    volumes:
+      - $PWD/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - uam-network
+
+  grafana:
+    image: grafana/grafana:9.5.2
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - $PWD/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
     networks:
       - uam-network
 
 volumes:
-    jenkins_home:
+  jenkins_home:
 networks:
   uam-network:
     external: true

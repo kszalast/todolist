@@ -33,10 +33,10 @@ node {
     
     stage('Deploy on docker') {
         cleanDockerContainer("todo-list")
-        sh ("docker run -d --network uam-network --hostname app --name todo-list -e DB_HOST='db' -e DB_PORT='3306' -e DB_USER='root' -e DB_PASSWORD='root' -v /var/log/:/var/log/ ${name}/monolit:${BUILD_NUMBER}")
+        sh ("docker run -d --network uam-network -p 7070:8080 --hostname app --name todo-list -e DB_HOST='db' -e DB_PORT='3306' -e DB_USER='root' -e DB_PASSWORD='root' -v /var/log/:/var/log/ ${name}/monolit:${BUILD_NUMBER}")
 
         cleanDockerContainer("exchange-rates")
-        sh ("docker run -d --network uam-network --hostname exchange-rates --name exchange-rates-container -v /var/log/:/var/log/ ${name}/exchange-rates:${BUILD_NUMBER}")
+        sh ("docker run -d --network uam-network -p 7071:8080 --hostname exchange-rates --name exchange-rates-container -v /var/log/:/var/log/ ${name}/exchange-rates:${BUILD_NUMBER}")
 
         cleanDockerContainer("frontend-app")
         sh ("docker run -d --network uam-network --hostname web --name frontend-app -v /var/log/:/var/log/ ${name}/frontend-app:${BUILD_NUMBER}")
