@@ -1,5 +1,9 @@
+# docker network create uam-network
 # sudo apt-get install docker-compose-plugin
 # docker compose up -d --force-recreate
+# Jenkins UI: http://localhost:8080/
+# Należy dokończyć instalację Jenkinsa oraz zainstalować wtyczki:
+# Maven plugin, Docker plugin
 version: '2'
 services:
 
