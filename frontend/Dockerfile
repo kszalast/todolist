@@ -2,12 +2,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY .npmrc /root/.npmrc
-
 COPY package.json package-lock.json ./
 
-RUN npm install
-
+# Install dependencies with clean npm cache
+RUN npm ci --legacy-peer-deps
 
 COPY . .
 

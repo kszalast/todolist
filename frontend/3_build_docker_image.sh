@@ -1,1 +1,1 @@
-docker build --no-cache -t frontend-app .
+docker build -t frontend-app .
