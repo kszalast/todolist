@@ -1,2 +1,18 @@
 spring:
   application.name: exchange-rates
+
+
+management:
+  metrics:
+    distribution:
+      percentiles-histogram.http.server.requests: true
+    percentiles:
+      http.server.requests: 0.95, 0.99
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true

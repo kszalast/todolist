@@ -1,0 +1,11 @@
+scrape_configs:
+  - job_name: 'TodoListMetrics'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 3s
+    static_configs:
+      - targets: ['app:8080']
+        labels:
+          application: 'Todo List'
+      - targets: [ 'exchange-rates:8080' ]
+        labels:
+          application: 'Exchange Rates'
